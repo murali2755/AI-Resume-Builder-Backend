@@ -1,0 +1,34 @@
+# docker-compose.yml — Local development environment
+# Starts a MySQL 8 database alongside the Spring Boot backend.
+#
+# Usage:
+#   docker-compose up -d          # start MySQL in background
+#   docker-compose down           # stop and remove containers
+#   docker-compose down -v        # also remove the data volume (reset DB)
+#
+# The backend still runs via Maven (mvn spring-boot:run) on your host machine.
+# Set DB_URL=jdbc:mysql://localhost:3306/resume_builder in your environment
+# or copy application-local.properties.example → application-local.properties.
+
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:8.0.36
+    container_name: resume_builder_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-changeme}
+      MYSQL_DATABASE: resume_builder
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-changeme}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql_data:

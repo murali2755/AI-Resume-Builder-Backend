@@ -1,0 +1,34 @@
+# ========================================================
+# AI Resume Builder Backend - Configuration Properties Template
+# Copy this file or set environment variables before running.
+# NEVER commit real credentials to version control.
+# ========================================================
+
+spring.application.name=backend
+server.port=8080
+
+# MySQL Database Configuration
+spring.datasource.url=jdbc:mysql://localhost:3306/resume_builder
+spring.datasource.username=root
+spring.datasource.password=YOUR_DATABASE_PASSWORD
+
+# JPA / Hibernate
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+spring.jpa.properties.hibernate.format_sql=false
+spring.jpa.open-in-view=false
+
+# JWT Configuration (Minimum 256 bits / 32 characters for HMAC-SHA256)
+jwt.secret=YOUR_SECURE_256_BIT_JWT_SECRET_KEY_MIN_32_CHARACTERS
+jwt.expiration=86400000
+
+# AI Provider Configuration
+# Supported providers: openai, gemini, groq, ollama
+ai.provider=openai
+ai.base-url=https://api.openai.com/v1
+ai.api-key=YOUR_AI_PROVIDER_API_KEY
+ai.model=gpt-4o-mini
+ai.timeout-seconds=30
+
+# CORS Configuration (comma-separated allowed origins)
+cors.allowed-origins=http://localhost:5173,http://localhost:5174
